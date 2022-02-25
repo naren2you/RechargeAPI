@@ -8,6 +8,7 @@ class Plan
     // Columns
     public $_id;
     public $operator;
+    public $country;
     public $plan_name;
     public $plan_value;
     public $Internet_details;
@@ -27,7 +28,7 @@ class Plan
     // GET ALL
     public function getPlans()
     {
-        $sqlQuery = "SELECT _id, operator, plan_name, plan_value, Internet_details, talk_value, validity, plan_details, othe_details, created FROM " . $this->db_table . "";
+        $sqlQuery = "SELECT _id, operator, country, plan_name, plan_value, Internet_details, talk_value, validity, plan_details, othe_details, created FROM " . $this->db_table . "";
         $this->result = $this->db->query($sqlQuery);
         return $this->result;
     }
@@ -37,6 +38,7 @@ class Plan
     {
         // sanitize
         $this->operator = htmlspecialchars(strip_tags($this->operator));
+        $this->country= htmlspecialchars(strip_tags($this->country));
         $this->plan_name = htmlspecialchars(strip_tags($this->plan_name));
         $this->plan_value = htmlspecialchars(strip_tags($this->plan_value));
         $this->Internet_details = htmlspecialchars(strip_tags($this->Internet_details));
@@ -48,6 +50,7 @@ class Plan
         $sqlQuery =
             "INSERT INTO " . $this->db_table . "(
             operator,
+            country,
             plan_name,
             plan_value,
             Internet_details, 
@@ -58,6 +61,7 @@ class Plan
             created ) 
             VALUES (
                 '$this->operator',
+                '$this->country',
                 '$this->plan_name',
                 '$this->plan_value',
                 '$this->Internet_details', 
@@ -77,12 +81,13 @@ class Plan
     // get details
     public function getSinglePlan()
     {
-        $sqlQuery = 'SELECT _id, operator, plan_name, plan_value, Internet_details, talk_value, validity, plan_details, othe_details,created FROM ' . $this->db_table . ' WHERE _id =' . $this->_id;
+        $sqlQuery = 'SELECT _id, operator, country, plan_name, plan_value, Internet_details, talk_value, validity, plan_details, othe_details,created FROM ' . $this->db_table . ' WHERE _id =' . $this->_id;
         $record = $this->db->query($sqlQuery);
         if ($record->num_rows > 0) {
             $dataRow = $record->fetch_assoc();
             $this->_id = $dataRow['_id'];
             $this->operator = $dataRow['operator'];
+            $this->country = $dataRow['country'];
             $this->plan_name = $dataRow['plan_name'];
             $this->plan_value = $dataRow['plan_value'];
             $this->Internet_details = $dataRow['Internet_details'];
@@ -98,6 +103,7 @@ class Plan
     public function updatePlan()
     {
         $this->operator = htmlspecialchars(strip_tags($this->operator));
+        $this->country = htmlspecialchars(strip_tags($this->country));
         $this->plan_name = htmlspecialchars(strip_tags($this->plan_name));
         $this->plan_value = htmlspecialchars(strip_tags($this->plan_value));
         $this->Internet_details = htmlspecialchars(strip_tags($this->Internet_details));
@@ -110,6 +116,7 @@ class Plan
 
         $sqlQuery = "UPDATE " . $this->db_table .
             " SET operator = '" . $this->operator . "',
+            country = '" . $this->country . "',
             plan_name = '" . $this->plan_name . "',
             plan_value = '" . $this->plan_value . "',
             Internet_details = '" . $this->Internet_details . "',
@@ -119,8 +126,6 @@ class Plan
             created = '" . $this->created . "',
             othe_details = '" . $this->othe_details . "'
             WHERE _id = " . $this->_id;
-
-        var_dump($sqlQuery);
         $this->db->query($sqlQuery);
         if ($this->db->affected_rows > 0) {
             return true;

@@ -17,6 +17,7 @@ if ($item->plan_name != null) {
     $emp_arr = array(
         "_id" => $item->_id,
         "operator" => $item->operator,
+        "country"=> $item->country,
         "plan_name" => $item->plan_name,
         "plan_value" => $item->plan_value,
         "Internet_details" => $item->Internet_details,

@@ -14,6 +14,7 @@ if (isset($postdata) && !empty($postdata)) {
     $request = json_decode($postdata);
     
     $item->operator = trim($request->operator);
+    $item->country = trim($request->country);
     $item->plan_name = trim($request->plan_name);
     $item->plan_value = trim($request->plan_value);
     $item->Internet_details = trim($request->Internet_details);
