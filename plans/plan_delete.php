@@ -11,10 +11,13 @@ $db = $database->getConnection();
 $item = new Plan($db);
 
 $item->_id = isset($_GET['_id']) ? $_GET['_id'] : die();
-
 if ($item->deletePlan()) {
-    echo json_encode("Plan deleted.");
+    http_response_code(200);
+    $data = array('msg' => 'Plan deleted.');
+    echo json_encode($data);
 } else {
-    echo json_encode("Data could not be deleted");
+    http_response_code(404);
+    $data = array('msg' => 'Data could not be deleted');
+    echo json_encode($data);
 }
 ?>

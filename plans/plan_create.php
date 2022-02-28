@@ -12,7 +12,7 @@ $db = $database->getConnection();
 $item = new Plan($db);
 if (isset($postdata) && !empty($postdata)) {
     $request = json_decode($postdata);
-    
+
     $item->operator = trim($request->operator);
     $item->country = trim($request->country);
     $item->plan_name = trim($request->plan_name);
@@ -25,12 +25,14 @@ if (isset($postdata) && !empty($postdata)) {
     $item->created = date('Y-m-d H:i:s');
 
     if ($item->createPlan()) {
-        echo 'Plan created successfully.';
+        http_response_code(200);
+        $data = array('msg' => 'Success');
+        echo json_encode($data);
     } else {
-        echo 'Plan could not be created.';
+        $data = array('msg' => 'Failed');
+        echo json_encode($data);
     }
 } else {
     echo 'Plan could not be created.';
 }
-
 ?>

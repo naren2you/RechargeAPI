@@ -14,7 +14,6 @@ $item = new Plan($db);
 
 $item->_id = isset($_GET['_id']) ? $_GET['_id'] : die();
 
-
 if (isset($postdata) && !empty($postdata)) {
     $request = json_decode($postdata);
     $item->operator = trim($request->operator);
@@ -29,9 +28,13 @@ if (isset($postdata) && !empty($postdata)) {
     $item->created = date('Y-m-d H:i:s');
 
     if ($item->updatePlan()) {
-        echo json_encode("Plan data updated.");
+        http_response_code(200);
+        $data = array('msg' => 'Success');
+        echo json_encode($data);
     } else {
-        echo json_encode("Data could not be updated");
+        http_response_code(404);
+        $data = array('msg' => 'Failed');
+        echo json_encode($data);
     }
 }
 

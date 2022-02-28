@@ -19,7 +19,7 @@ if ($itemCount > 0) {
     http_response_code(200);
     echo json_encode($planArr);
 } else {
-    http_response_code(404);
+    http_response_code(200);
     echo json_encode(
         array("message" => "No record found.")
     );

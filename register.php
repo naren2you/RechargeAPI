@@ -17,7 +17,11 @@ if (isset($postdata) && !empty($postdata)) {
     $language = trim($request->language);
 
 
-    $sql = "INSERT INTO users(
+    $sqlalreadyext = "SELECT email FROM users where email='$email'";
+    $result = mysqli_query($mysqli, $sqlalreadyext);
+    $nums = mysqli_num_rows($result);
+    if ($nums == 0) {
+        $sql = "INSERT INTO users(
         f_name,
         l_name,
         email,
@@ -34,11 +38,24 @@ if (isset($postdata) && !empty($postdata)) {
             '$country',
             '$language'
         )";
-    if ($mysqli->query($sql)) {
-        $data = array('msg' => 'Success');
-        echo json_encode($data);
-    } else {
-        $data = array('msg' => 'Failed');
+        if ($mysqli->query($sql)) {
+            $data = array();
+            $data["body"] = array();
+            $data["msg"] = 'Success';
+            http_response_code(200);
+            echo json_encode($data);
+        } else {
+            $data = array();
+            $data["body"] = array();
+            $data["msg"] = 'Failed';
+            http_response_code(500);
+            echo json_encode($data);
+        }
+    }else{
+        $data = array();
+        $data["body"] = array();
+        $data["msg"] = 'Failed : Email Already exists.';
+        http_response_code(303);
         echo json_encode($data);
     }
 }
