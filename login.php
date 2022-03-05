@@ -10,7 +10,7 @@ if (isset($postdata) && !empty($postdata)) {
     $email = mysqli_real_escape_string($mysqli, trim($request->email));
     $password = mysqli_real_escape_string($mysqli, trim($request->password));
 
-    $sql = "SELECT country, email, f_name, l_name,language,mobile, user_type FROM users where email='$email' and password='$password'";
+    $sql = "SELECT _id,country, email, f_name, l_name,language,mobile, user_type FROM users where email='$email' and password='$password'";
     $result = mysqli_query($mysqli, $sql);
 
     $nums = mysqli_num_rows($result);
@@ -19,7 +19,7 @@ if (isset($postdata) && !empty($postdata)) {
         $data["body"] = array();
         $data["msg"] = 'Success';
         $data["itemCount"] = $nums;
-        while($row = $result->fetch_assoc()){
+        while ($row = $result->fetch_assoc()) {
             array_push($data["body"], $row);
         }
         http_response_code(200);

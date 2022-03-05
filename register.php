@@ -15,6 +15,7 @@ if (isset($postdata) && !empty($postdata)) {
     $mobile = trim($request->mobile);
     $country = trim($request->country);
     $language = trim($request->language);
+    $created_by = trim($request->created_by);
 
 
     $sqlalreadyext = "SELECT email FROM users where email='$email'";
@@ -28,7 +29,7 @@ if (isset($postdata) && !empty($postdata)) {
         password, 
         user_type,
         mobile,country,
-        language) VALUES (
+        language, created_by) VALUES (
             '$f_name',
             '$l_name',
             '$email',
@@ -36,7 +37,8 @@ if (isset($postdata) && !empty($postdata)) {
             '$user_type',
             '$mobile',
             '$country',
-            '$language'
+            '$language',
+            '$created_by'
         )";
         if ($mysqli->query($sql)) {
             $data = array();
@@ -51,7 +53,7 @@ if (isset($postdata) && !empty($postdata)) {
             http_response_code(500);
             echo json_encode($data);
         }
-    }else{
+    } else {
         $data = array();
         $data["body"] = array();
         $data["msg"] = 'Failed : Email Already exists.';
