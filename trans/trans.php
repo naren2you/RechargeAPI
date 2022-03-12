@@ -54,11 +54,12 @@ class Trans
         $this->requestOn = htmlspecialchars(strip_tags($this->requestOn));
         $this->processedBy = htmlspecialchars(strip_tags($this->processedBy));
         $this->processOn = htmlspecialchars(strip_tags($this->processOn));
+        $this->plan_id = htmlspecialchars(strip_tags($this->plan_id));
 
         $sqlQuery =
             "INSERT INTO " . $this->db_table . "(
-                mobile, operator, country, plan_name, plan_value, Internet_details, talk_value, validity, plan_details,  status, requestBy, requestOn, processedBy, processOn ) 
-                VALUES ('$this->mobile','$this->operator', '$this->country', '$this->plan_name', '$this->plan_value', '$this->Internet_details', '$this->talk_value', '$this->validity', '$this->plan_details', '$this->status', '$this->requestBy', '$this->requestOn', '$this->processedBy', '$this->processOn')";
+                mobile, operator, country, plan_name, plan_id, plan_value, Internet_details, talk_value, validity, plan_details,  status, requestBy, requestOn, processedBy, processOn ) 
+                VALUES ('$this->mobile','$this->operator', '$this->country', '$this->plan_name', '$this->plan_id', '$this->plan_value', '$this->Internet_details', '$this->talk_value', '$this->validity', '$this->plan_details', '$this->status', '$this->requestBy', '$this->requestOn', '$this->processedBy', '$this->processOn')";
         $this->db->query($sqlQuery);
         if ($this->db->affected_rows > 0) {
             return true;

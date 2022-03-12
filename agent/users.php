@@ -80,6 +80,22 @@ class User
     }
 
     // UPDATE
+    public function updateAmount()
+    {
+        $this->balanceAmount = htmlspecialchars(strip_tags($this->balanceAmount));
+        $this->_id = htmlspecialchars(strip_tags($this->_id));
+
+        $sqlQuery = "UPDATE " . $this->db_table .
+            " SET balanceAmount = '" . $this->balanceAmount . "'
+            WHERE _id = " . $this->_id;
+        $this->db->query($sqlQuery);
+        if ($this->db->affected_rows > 0) {
+            return true;
+        }
+        return false;
+    }
+
+    // UPDATE
     public function updateUser()
     {
         $this->f_name = htmlspecialchars(strip_tags($this->f_name));

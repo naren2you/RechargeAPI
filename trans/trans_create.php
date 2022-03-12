@@ -12,7 +12,6 @@ $db = $database->getConnection();
 $item = new Trans($db);
 if (isset($postdata) && !empty($postdata)) {
     $request = json_decode($postdata);
-
     $item->mobile = trim($request->mobile);
     $item->operator = trim($request->operator);
     $item->country = trim($request->country);
