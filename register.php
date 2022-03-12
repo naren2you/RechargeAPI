@@ -10,7 +10,7 @@ if (isset($postdata) && !empty($postdata)) {
     $f_name = trim($request->f_name);
     $l_name = trim($request->l_name);
     $email = mysqli_real_escape_string($mysqli, trim($request->email));
-    $password = mysqli_real_escape_string($mysqli, trim($request->password));
+    $password = md5(mysqli_real_escape_string($mysqli, trim($request->password)));
     $user_type = trim($request->user_type);
     $mobile = trim($request->mobile);
     $country = trim($request->country);
@@ -28,8 +28,10 @@ if (isset($postdata) && !empty($postdata)) {
         email,
         password, 
         user_type,
-        mobile,country,
-        language, created_by) VALUES (
+        mobile,
+        country,
+        language, 
+        created_by) VALUES (
             '$f_name',
             '$l_name',
             '$email',

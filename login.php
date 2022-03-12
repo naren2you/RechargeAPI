@@ -6,9 +6,8 @@ $postdata = file_get_contents('php://input');
 
 if (isset($postdata) && !empty($postdata)) {
     $request = json_decode($postdata);
-
     $email = mysqli_real_escape_string($mysqli, trim($request->email));
-    $password = mysqli_real_escape_string($mysqli, trim($request->password));
+    $password = md5(mysqli_real_escape_string($mysqli, trim($request->password)));
 
     $sql = "SELECT _id,country, email, f_name, l_name,language,mobile, user_type FROM users where email='$email' and password='$password'";
     $result = mysqli_query($mysqli, $sql);
